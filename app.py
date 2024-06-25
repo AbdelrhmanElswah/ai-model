@@ -24,7 +24,10 @@ def predict_brain_tumor():
         return jsonify({
             'code': 200,
             'status': 'success',
-            'data': prediction
+            'data': {
+                    'class':prediction['className'],
+                     'percentage':prediction['percentage']
+                     }
         }), 200
     
 
@@ -43,7 +46,10 @@ def predict_covid19():
         return jsonify({
             'code': 200,
             'status': 'success',
-            'data': prediction
+            'data': {
+                    'class':prediction['className'],
+                     'percentage':prediction['percentage']
+                     }
         }), 200
 
 if __name__ == '__main__':
