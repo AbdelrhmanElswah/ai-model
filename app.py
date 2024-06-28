@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from models.brain_tumor_model import BrainTumorModel
 from models.covid19_model import Covid19Model
+from models.eye_model import EyeModel
 from utils.preprocess import preprocess_image
 from flask_cors import CORS
 
@@ -10,7 +11,7 @@ CORS(app)
 # Initialize your models
 brain_tumor_model = BrainTumorModel()
 covid19_model = Covid19Model()
-
+eye_model=EyeModel()
 @app.route('/predict/brain_tumor', methods=['POST'])
 def predict_brain_tumor():
     if 'file' not in request.files:
@@ -52,6 +53,26 @@ def predict_covid19():
                      }
         }), 200
 
+@app.route('/predict/eye', methods=['POST'])
+def preditc_eye():
+    if 'file' not in request.files:
+        return jsonify({'code': 400, 'status': 'error', 'data': 'No file provided'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'code': 400, 'status': 'error', 'data': 'No file selected'}), 400
+    if file:
+        image = preprocess_image(file, target_size=(224, 224))
+        prediction = eye_model.predict(image)
+
+
+        return jsonify({
+            'code': 200,
+            'status': 'success',
+            'data': {
+                    'class':prediction['className'],
+                     'percentage':prediction['percentage']
+                     }
+        }), 200
 if __name__ == '__main__':
     app.run(debug=True)
 

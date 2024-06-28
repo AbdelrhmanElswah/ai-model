@@ -1,11 +1,14 @@
 import numpy as np
 import tensorflow as tf
-import cv2
+import os
 from PIL import Image
 
 class Covid19Model:
     def __init__(self):
-        self.model_path = r"C:\xampp\htdocs\dashboard\ai-model-api\models\trained_models\chest_model_mobilenet_95.h5"
+
+        rel_path = r"models/trained_models/chest_model_mobilenet_95.h5"  # Raw string with forward slashes
+        self.model_path = os.path.join(os.getcwd(), rel_path)  # Combine with current working directory
+
         self.model = tf.keras.models.load_model(self.model_path)
         self.class_names = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
 

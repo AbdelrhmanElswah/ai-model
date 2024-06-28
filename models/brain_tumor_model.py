@@ -1,12 +1,14 @@
 import numpy as np
 import tensorflow as tf
+import os
 
 class BrainTumorModel:
     def __init__(self):
-        self.model_path = r"C:\xampp\htdocs\dashboard\ai-model-api\models\trained_models\brain_model_mobilenet_98.h5"
+        rel_path = r"models/trained_models/brain_model_mobilenet_98.h5"  # Raw string with forward slashes
+        self.model_path = os.path.join(os.getcwd(), rel_path)  # Combine with current working directory
+
         self.model = tf.keras.models.load_model(self.model_path)
         self.class_names = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
-
     def predict(self, image):
         predictions = self.model.predict(image)
         
