@@ -8,7 +8,7 @@ class BrainTumorModel:
         self.model_path = os.path.join(os.getcwd(), rel_path)  # Combine with current working directory
 
         self.model = tf.keras.models.load_model(self.model_path)
-        self.class_names = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
+        self.class_names = ['glioma_tumor', 'normal', 'meningioma_tumor', 'pituitary_tumor']
     def predict(self, image):
         predictions = self.model.predict(image)
         

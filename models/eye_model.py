@@ -10,8 +10,7 @@ class EyeModel:
         self.model_path = os.path.join(os.getcwd(), rel_path)  # Combine with current working directory
 
         self.model = tf.keras.models.load_model(self.model_path)
-        self.class_names = ['normal','cataract','diabetic_retinopathy','glaucoma']
-
+        self.class_names=['cataract','diabetic_retinopathy','glaucoma','normal']
 
 
     def predict(self, image):
